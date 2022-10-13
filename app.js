@@ -101,6 +101,20 @@ function handleNumber(number) {
 }
 
 function handleResultFontSize(text) {
+  
+  if(text.length > 9) {
+    text = 'N - too big';
+    result.innerHTML = text;
+  }
+  
+  changeFontSize(text);
+}
+
+function showMessageIfOutputBig() {
+
+}
+
+function changeFontSize(text) {
   const fontSize = parseInt(
     getComputedStyle(document.body).getPropertyValue('--font-size')
   );
