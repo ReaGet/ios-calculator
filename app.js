@@ -1,4 +1,4 @@
-const result = document.querySelector('.result');
+const result = document.querySelector('.result__text');
 let calcTotal = 0;
 let prevOperator = null;
 let buffer = '';
@@ -15,9 +15,9 @@ function handleClick(value) {
     handleNumber(value);
   }
   
-  const output = buffer || 0;
+  const output = buffer || '0';
   result.innerHTML = numberWithSpaces(output);
-  handleResultFontSize(output);
+  handleResultFontSize(buffer);
 }
 
 function handleSymbol(symbol) {
@@ -67,7 +67,7 @@ function handleResult() {
     return;
   }
   makeCalculation();
-  buffer = calcTotal;
+  buffer = String(calcTotal);
   calcTotal = 0;
   prevOperator = null;
 }
@@ -104,8 +104,11 @@ function handleResultFontSize(text) {
   const fontSize = parseInt(
     getComputedStyle(document.body).getPropertyValue('--font-size')
   );
-  console.log(fontSize);
-  result.style['font-size'] = '12px';
+
+  const newSize = fontSize * ((9 - text.length) / 9);
+  result.parentNode.style['font-size'] = Math.max(
+    Math.min(newSize, fontSize), 
+    37) + 'px';
 }
 
 function numberWithSpaces(x) {
